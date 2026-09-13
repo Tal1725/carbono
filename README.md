@@ -1,34 +1,37 @@
 # NEXO
 
-Mensageiro privado com foco em criptografia ponta a ponta, privacidade e recursos que vão além dos mensageiros tradicionais.
+Mensageiro privado com identidade por `@username`, sem número de telefone como identificador de contato.
 
-## Visão do projeto
+## Identidade
 
-- Mensagens individuais e em grupo
-- Criptografia ponta a ponta
-- Identidade por `@usuario`, além de telefone/e-mail quando necessário
-- Mensagens temporárias e visualização única
-- Cofres/conversas privadas protegidas no dispositivo
-- Chamadas de voz e vídeo
-- Compartilhamento de fotos, vídeos e arquivos
-- Tradução e resumo de conversas como recursos opcionais
-- Comunidades e canais
-- Proteção contra spam e abuso
+Cada conta possui um identificador único no formato `@usuario`. Esse identificador é usado para encontrar e adicionar contatos.
 
-## Segurança
+O número de telefone não faz parte do cadastro nem é usado para descobrir contatos.
 
-O NEXO não implementará uma criptografia proprietária. A camada de mensagens deverá usar protocolos e bibliotecas criptográficas reconhecidos e auditáveis. Chaves privadas devem permanecer no dispositivo do usuário sempre que a arquitetura permitir.
+## Recuperação da conta
 
-## Fases
+O objetivo do NEXO é permitir que uma pessoa perca ou troque o celular e continue com a mesma conta usando:
 
-1. Fundação do aplicativo e identidade
-2. Mensagens em tempo real
-3. Criptografia ponta a ponta
-4. Grupos e mídia
-5. Recursos exclusivos do NEXO
-6. Chamadas
-7. Auditoria e testes de segurança
+1. `@usuario`
+2. senha da conta
+3. uma chave de recuperação criptográfica criada na primeira configuração
 
-## Regra do projeto
+A senha nunca será armazenada em texto puro e não será usada diretamente como chave de criptografia.
 
-Não comprometer a segurança para ganhar velocidade. Recursos serão adicionados sem remover a proteção das mensagens.
+O histórico e as mídias serão armazenados como backup criptografado de ponta a ponta. O servidor deverá receber somente dados cifrados e os metadados mínimos necessários para autenticação, entrega e sincronização.
+
+A recuperação deve liberar a chave de descriptografia somente no dispositivo autenticado. O servidor não terá uma cópia da chave privada em claro.
+
+## Regra de segurança
+
+`@usuario` identifica a conta, mas não é segredo. Quem tentar recuperar uma conta precisará provar conhecimento da credencial de autenticação e, para o histórico E2EE, possuir o material de recuperação necessário.
+
+Isso evita o erro de tratar o `@usuario` como se fosse uma senha.
+
+## Diferencial
+
+- Sem número de telefone para cadastro ou contato.
+- O mesmo `@usuario` permanece com o cliente quando ele troca de aparelho.
+- Recuperação em novo celular.
+- Mensagens e mídias com criptografia ponta a ponta.
+- Backup criptografado para permitir recuperação sem transformar o servidor em leitor das conversas.
