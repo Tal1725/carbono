@@ -1,4 +1,4 @@
-const $=s=>document.querySelector(s);const state={ollama:localStorage.ia_ollama||'http://127.0.0.1:11434',model:localStorage.ia_model||'tinyllama:latest',video:localStorage.ia_video||'http://127.0.0.1:8188'};
+const $=s=>document.querySelector(s);const localProxy=location.protocol==='http:'&&location.port==='8765'?location.origin:'http://127.0.0.1:11434';const state={ollama:localStorage.ia_ollama||localProxy,model:localStorage.ia_model||'tinyllama:latest',video:localStorage.ia_video||'http://127.0.0.1:8188'};
 function sync(){ $('#ollamaUrl').value=state.ollama;$('#model').value=state.model;$('#videoUrl').value=state.video}
 function setStatus(ok,text){$('#status i').style.background=ok?'#22c55e':'#f59e0b';$('#status span').textContent=text}
 async function health(){try{let r=await fetch(state.ollama+'/api/tags');if(!r.ok)throw 0;setStatus(true,'Ollama conectado')}catch(e){setStatus(false,'Ollama não conectado')}}
