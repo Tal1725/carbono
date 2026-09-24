@@ -1,6 +1,39 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#050509"><meta name="description" content="NEXO — mensageiro privado por @usuário."><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon.svg"><title>NEXO — converse. conecte. desapareça.</title><link rel="stylesheet" href="styles.css?v=20260913b">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1020"><meta name="description" content="IA LIVRE — conversa local e criação de vídeos curtos sem cobrança por mensagem.">
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg">
+<title>IA LIVRE</title><link rel="stylesheet" href="styles.css">
 </head>
-<body><div class="app" id="app"></div><div class="toast" id="toast"></div><script type="module" src="app.js?v=20260913b"></script><script>if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');</script></body></html>
+<body>
+<div class="app">
+<header class="topbar">
+  <div class="brand"><div class="logo">✦</div><div><strong>IA LIVRE</strong><span>conversa + vídeo</span></div></div>
+  <div class="status" id="status"><i></i><span>Verificando conexão…</span></div>
+</header>
+<main>
+<section class="hero">
+  <div><p class="eyebrow">SEU ASSISTENTE LOCAL</p><h1>Pergunte. Crie. <em>Imagine.</em></h1><p class="sub">Converse à vontade e prepare vídeos curtos usando modelos locais, sem cobrança por uso.</p></div>
+  <button class="settings" id="openSettings">⚙ Configurar</button>
+</section>
+<section class="tabs"><button class="tab active" data-tab="chat">💬 Conversar</button><button class="tab" data-tab="video">🎬 Criar vídeo</button></section>
+<section id="chatPanel" class="panel">
+  <div class="messages" id="messages"><div class="welcome"><div class="orb">✦</div><h2>Olá, Ayslan.</h2><p>Estou pronto. Faça uma pergunta ou peça uma ideia.</p></div></div>
+  <form id="chatForm" class="composer"><textarea id="prompt" rows="1" placeholder="Digite sua pergunta…" autocomplete="off"></textarea><button type="submit" title="Enviar">➤</button></form>
+</section>
+<section id="videoPanel" class="panel hidden">
+  <div class="video-card">
+    <div class="video-head"><div><h2>Crie um vídeo curto</h2><p>Descreva a cena. A IA prepara o prompt e envia para o gerador local.</p></div><span class="badge">LOCAL</span></div>
+    <textarea id="videoPrompt" rows="5" placeholder="Ex.: Um homem caminhando em uma estrada de terra ao pôr do sol, estilo cinematográfico, 8 segundos…"></textarea>
+    <div class="video-options"><label>Duração<select id="duration"><option value="5">5 s</option><option value="8" selected>8 s</option><option value="10">10 s</option></select></label><label>Formato<select id="ratio"><option value="9:16" selected>9:16 vertical</option><option value="16:9">16:9 horizontal</option></select></label></div>
+    <button class="generate" id="generateVideo">🎬 Gerar vídeo</button>
+    <div id="videoResult" class="video-result"></div>
+  </div>
+</section>
+</main>
+<footer><span>IA LIVRE</span><span>Modelos locais • sem créditos por mensagem</span></footer>
+</div>
+<div class="modal hidden" id="settingsModal"><div class="modal-box"><button class="close" id="closeSettings">×</button><h2>Configuração</h2><p class="muted">Use o Ollama instalado no computador. O endereço padrão é local.</p><label>Ollama URL<input id="ollamaUrl" value="http://127.0.0.1:11434"></label><label>Modelo<input id="model" value="tinyllama:latest"></label><label>Gerador de vídeo local (opcional)<input id="videoUrl" value="http://127.0.0.1:8188"></label><button class="save" id="saveSettings">Salvar</button><p class="hint">As configurações ficam somente neste navegador.</p></div></div>
+<script src="app.js"></script>
+</body></html>

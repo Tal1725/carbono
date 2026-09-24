@@ -1,37 +1,19 @@
-# NEXO
+# IA LIVRE
 
-Mensageiro privado com identidade por `@username`, sem número de telefone como identificador de contato.
+Projeto independente construído no repositório que antes hospedava o NEXO/Carbono. O PULSO permanece em seu próprio repositório e não é alterado por este projeto.
 
-## Identidade
+## O que já está aqui
+- Interface PWA para conversar com Ollama local.
+- Histórico da conversa na sessão do navegador.
+- Configuração do endereço e modelo do Ollama.
+- Área de criação de vídeos curtos preparada para um gerador local.
+- Sem API paga obrigatória para o chat.
 
-Cada conta possui um identificador único no formato `@usuario`. Esse identificador é usado para encontrar e adicionar contatos.
+## Vídeo sem cobrança por geração
+O código da interface não promete geração em nuvem ilimitada. Para manter o custo de uso em zero, o caminho é geração local. Um backend local pode expor POST /prompt e devolver { "video_url": "..." }. ComfyUI/Wan e outros modelos locais podem ocupar vários GB e dependem do hardware disponível.
 
-O número de telefone não faz parte do cadastro nem é usado para descobrir contatos.
+## Publicação
+O projeto é estático e pode ser publicado pelo GitHub Pages. O chat local precisa de acesso do navegador ao Ollama. Dependendo da configuração do Ollama, pode ser necessário permitir a origem da página.
 
-## Recuperação da conta
-
-O objetivo do NEXO é permitir que uma pessoa perca ou troque o celular e continue com a mesma conta usando:
-
-1. `@usuario`
-2. senha da conta
-3. uma chave de recuperação criptográfica criada na primeira configuração
-
-A senha nunca será armazenada em texto puro e não será usada diretamente como chave de criptografia.
-
-O histórico e as mídias serão armazenados como backup criptografado de ponta a ponta. O servidor deverá receber somente dados cifrados e os metadados mínimos necessários para autenticação, entrega e sincronização.
-
-A recuperação deve liberar a chave de descriptografia somente no dispositivo autenticado. O servidor não terá uma cópia da chave privada em claro.
-
-## Regra de segurança
-
-`@usuario` identifica a conta, mas não é segredo. Quem tentar recuperar uma conta precisará provar conhecimento da credencial de autenticação e, para o histórico E2EE, possuir o material de recuperação necessário.
-
-Isso evita o erro de tratar o `@usuario` como se fosse uma senha.
-
-## Diferencial
-
-- Sem número de telefone para cadastro ou contato.
-- O mesmo `@usuario` permanece com o cliente quando ele troca de aparelho.
-- Recuperação em novo celular.
-- Mensagens e mídias com criptografia ponta a ponta.
-- Backup criptografado para permitir recuperação sem transformar o servidor em leitor das conversas.
+## Próxima etapa técnica
+Adicionar um backend local que inicialize/verifique Ollama e o pipeline de vídeo e exponha uma única API local para a interface.
